@@ -1,0 +1,305 @@
+﻿@model TryMoreWeb.Models.ProductModel
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jscolor.js"></script>
+<div class="row">
+
+    <!-- ============================================================== -->
+    <!-- valifation types -->
+    <!-- ============================================================== -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <h5 class="card-header">Product</h5>
+            <div class="card-body">
+                @*new Dictionary<string, object>
+        { { "enctype", "multipart/form-data" }, { "data-ajax", "false"} })*@
+                @using (Html.BeginForm("Product", "Product", FormMethod.Post, new Dictionary<string, object>
+                                                                                                                                                                                            { { "data-parsley-validate", "" }, { "novalidate", "false"} , { "id", "validationProductform"},{"enctype","multipart/form-data" } }))
+
+                {
+                    @Html.HiddenFor(m => m.ProductID)
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group row">
+
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Product Name</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @if (Session["UserType"].ToString() == "0")
+                            {
+                                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", @required = "", @placeholder = "Product Name", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", @required = "", @placeholder = "Product Name", })
+                            }
+
+
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Product Description</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @if (Session["UserType"].ToString() == "0")
+                            {
+                                @Html.TextBoxFor(m => m.ProductDescription, new { @class = "form-control", @required = "", @placeholder = "Product Description", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.ProductDescription, new { @class = "form-control", @required = "", @placeholder = "Product Description" })
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Category</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @if (Session["UserType"].ToString() == "0")
+                            {
+                                @Html.DropDownList("CategoryID", ViewBag.Categories as SelectList, new { @class = "form-control", @required = "", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.DropDownList("CategoryID", ViewBag.Categories as SelectList, new { @class = "form-control", @required = "" })
+                            }
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Brand</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @if (Session["UserType"].ToString() == "0")
+                            {
+                                @Html.DropDownList("BrandID", ViewBag.Brands as SelectList, new { @class = "form-control", @required = "", @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.DropDownList("BrandID", ViewBag.Brands as SelectList, new { @class = "form-control", @required = "" })
+                            }
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Quantity</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @if (Session["UserType"].ToString() == "0")
+                            {
+                                @Html.TextBoxFor(m => m.QuantityPerUnit, new Dictionary<string, object>
+                  { { "data-parsley-type" , "number"}, { "class", "form-control"} , { "placeholder", "Quantity"}
+                           , { "disabled", "disabled" }})
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.QuantityPerUnit, new Dictionary<string, object>
+              { { "data-parsley-type" , "number"}, { "class", "form-control"} , { "placeholder", "Quantity"} })
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Price</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @if (Session["UserType"].ToString() == "0")
+                            {
+                                @Html.TextBoxFor(m => m.UnitPrice, new Dictionary<string, object>
+                  { { "data-parsley-type" , "digits"}, { "class", "form-control"} , { "placeholder", "Price"} , { "disabled", "disabled" } })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.UnitPrice, new Dictionary<string, object>
+              { { "data-parsley-type" , "digits"}, { "class", "form-control"} , { "placeholder", "Price"} })
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Size</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @if (Session["UserType"].ToString() == "0")
+                            {
+                                @Html.TextBoxFor(m => m.Size, new Dictionary<string, object>
+                  { { "class", "form-control"} , { "placeholder", "Size"}  , { "disabled", "disabled" }})
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.Size, new Dictionary<string, object>
+              { { "class", "form-control"} , { "placeholder", "Size"} })
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Colour</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @if (Session["UserType"].ToString() == "0")
+                            {
+                                <input value="#3399FF80" data-jscolor="{}" id="Color" name="Color" disabled>
+                            }
+                            else
+                            {
+                                <input value="#3399FF80" data-jscolor="{}" id="Color" name="Color">
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Discount</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @if (Session["UserType"].ToString() == "0")
+                            {
+                                @Html.TextBoxFor(m => m.Discount, new Dictionary<string, object>
+                  { { "data-parsley-type" , "digits"}, { "class", "form-control"} , { "placeholder", "Discount"}  , { "disabled", "disabled" } })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.Discount, new Dictionary<string, object>
+              { { "data-parsley-type" , "digits"}, { "class", "form-control"} , { "placeholder", "Discount"} })
+                            } %
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Unit Weight</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @if (Session["UserType"].ToString() == "0")
+                            {
+                                @Html.TextBoxFor(m => m.UnitWeight, new Dictionary<string, object>
+                  { { "data-parsley-type" , "digits"}, { "class", "form-control"} , { "placeholder", "Unit Weight"}  , { "disabled", "disabled" } })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.UnitWeight, new Dictionary<string, object>
+              { { "data-parsley-type" , "digits"}, { "class", "form-control"} , { "placeholder", "Unit Weight"} })
+                            }
+                        </div>
+                    </div>
+                    @*<div class="form-group row">
+                      <label class="col-12 col-sm-3 col-form-label text-sm-right">Units In Stack</label>
+                      <div class="col-12 col-sm-8 col-lg-6">
+                          @Html.TextBoxFor(m => m.UnitsInStack, new Dictionary<string, object>
+            { { "data-parsley-type" , "number"}, { "class", "form-control"} , { "placeholder", "Units In Stack"} })
+                      </div>
+                  </div>*@
+
+                    @*<div class="form-group row">
+                <label class="col-12 col-sm-3 col-form-label text-sm-right">Is Approve</label>
+                <div class="col-1 col-sm-1 col-lg-1 ">
+                    <label class="custom-control custom-checkbox">
+                        @Html.CheckBoxFor(m => m.IsApproveBool, new { @class = "custom-control-input" })
+                        <span class="custom-control-label"></span>
+                    </label>
+                </div>
+            </div>*@
+
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Product Image</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @if (Session["UserType"].ToString() == "0")
+                            {
+                                <input type="file" id="files" name="files" onchange="checkFile()" data-parsley-type="file" disabled />
+
+                            }
+                            else
+                            {
+                                <input type="file" id="files" name="files" onchange="checkFile()" data-parsley-type="file" />
+                            }
+                        </div>
+                    </div>
+                    if (Model.Picture != null && Model.Picture != "")
+                    {
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right"></label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <img src="@Url.Content(Model.Picture)" height="100px" width="100px" />
+                            </div>
+                        </div>
+                    }
+                    if (Session["UserType"].ToString() == "0")
+                    {
+
+                        <div class="form-group row text-right">
+                            <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                                <a class="btn btn-space btn-primary" href="@Url.Action("GetProducts","Product")">Back</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group row text-right">
+                            <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                                <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end valifation types -->
+    <!-- ============================================================== -->
+
+</div>
+<script>$('#validationProductform').parsley();</script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+                if ('@TempData["success"]' == "True") {
+                    bootoast.toast({
+                        message: '@TempData["message"]',
+                        type: 'success',
+                        position: 'right-top',
+                    });
+                }
+                else if ('@TempData["success"]' == "False") {
+                    bootoast.toast({
+                        message: '@TempData["message"]',
+                        type: 'danger',
+                        position: 'right-top',
+                    });
+                }
+
+    });
+
+    function checkFile() {
+          for (var i = 0; i < $("#files").get(0).files.length; ++i) {
+
+                    var file1 = $("#files").get(0).files[i].name;
+
+                    if (file1) {
+                        //var file_size = $("#files").get(0).files[i].size;
+                        //if (file_size < 2097152) {
+                        var ext = file1.split('.').pop().toLowerCase();
+                        if ($.inArray(ext, ['jpg', 'jpeg', 'png']) === -1) {
+                            alert("Invalid file");
+                            $("#files").val("");
+                            //    }
+
+                            //} else {
+                            //    alert("Screenshot size is too large.");
+                            //    return false;
+                        }
+                    }
+                }
+    }
+</script>

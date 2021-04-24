@@ -1,0 +1,117 @@
+﻿@model List<TryMoreWeb.Models.SMSPlanModel>
+
+@{
+    ViewBag.Title = "GetAllSMSPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="page-header">
+            <h2 class="pageheader-title">SMS Plans</h2>
+
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- end pageheader -->
+<!-- ============================================================== -->
+<div class="row">
+
+    <!-- ============================================================== -->
+    <!-- basic table  -->
+    <!-- ============================================================== -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-header" style="text-align:right;">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <a class="btn btn-primary" href="@Url.Action("SMSPlan","SMSPlan")">Add New Plan </a>
+                    @*<button class="btn btn-primary" onclick="@Url.Action("SMSPlan","SMSPlan")" type="submit">Add New Plan  </button>*@
+                </div>
+            </div>
+            @*<h5 class="card-header">Basic Table</h5>*@
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered first">
+                        <thead>
+                            <tr>
+                                <th>Plan</th>
+                                <th>Number of SMS</th>
+                                <th>Amount</th>
+                                <th>Is Active</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int index = 1;}
+                            @if (Model.Count > 0)
+                            {
+                                foreach (var items in Model)
+                                {
+                                    <tr>
+                                        <td>@items.PlanName</td>
+                                        <td>@items.NoOfSMS</td>
+                                        <td>@items.Amount</td>
+                                        <td>
+                                            @if (items.IsActive == 1)
+                                            {
+                                                <label class="custom-control custom-checkbox">
+                                                    <input disabled type="checkbox" checked="checked" class="custom-control-input">
+                                                    <span class="custom-control-label"></span>
+                                                </label>
+                                            }
+                                            else
+                                            {
+
+                                                <label class="custom-control custom-checkbox">
+                                                    <input disabled type="checkbox" class="custom-control-input">
+                                                    <span class="custom-control-label"></span>
+                                                </label>
+
+                                            }
+                                        </td>
+                                        <td><a class="btn btn-primary" href="@Url.Action("SMSPlan","SMSPlan",new { SMSPlanID = items.SMSPlanID })">Edit </a></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                        @*<tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </tfoot>*@
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end basic table  -->
+    <!-- ============================================================== -->
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+                if ('@TempData["success"]' == "True") {
+                    bootoast.toast({
+                        message: '@TempData["message"]',
+                        type: 'success',
+                        position: 'right-top',
+                    });
+                }
+                else if ('@TempData["success"]' == "False") {
+                    bootoast.toast({
+                        message: '@TempData["message"]',
+                        type: 'danger',
+                        position: 'right-top',
+                    });
+                }
+
+            });
+</script>

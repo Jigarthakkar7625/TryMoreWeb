@@ -1,0 +1,200 @@
+﻿@model TryMoreWeb.Models.UsersModel
+@using TryMoreWeb.Models
+@{
+    ViewBag.Title = "UpdateProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+
+    <!-- ============================================================== -->
+    <!-- valifation types -->
+    <!-- ============================================================== -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <h5 class="card-header">Update Profile</h5>
+            <div class="card-body">
+                @*new Dictionary<string, object>
+                    { { "enctype", "multipart/form-data" }, { "data-ajax", "false"} })*@
+                @using (Html.BeginForm("UpdateProfile", "UserManagement", FormMethod.Post, new Dictionary<string, object>
+                                                                                                                { { "data-parsley-validate", "" }, { "novalidate", "false"} , { "id", "validationSMSPlanform"},{"enctype","multipart/form-data" } }))
+
+                {
+
+                    @Html.AntiForgeryToken()
+                    <div class="form-group row">
+
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">First Name</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @required = "", @placeholder = "Plan Name" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Last Name</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @required = "", @placeholder = "Plan Name" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">User Name</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @required = "", @placeholder = "Plan Name" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Email</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @Html.TextBoxFor(m => m.Email,
+                           new Dictionary<string, object>
+                { { "data-parsley-type" , "email"}, { "class", "form-control"} , { "placeholder", "Email"}  , { "required", ""} })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Phone</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Address Line 1</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @Html.TextBoxFor(m => m.AddrLine1, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Address Line 2</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+
+                            @Html.TextBoxFor(m => m.AddrLine2, new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Postal Code</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+
+                            @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">City</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+
+                            @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Country</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+
+                            @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Profile Image</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            <input type="file" id="files" name="files" onchange="checkFile()" data-parsley-type="file" />
+
+
+                        </div>
+                    </div>
+                    if (Model.ProfileImage != null && Model.ProfileImage != "")
+                    {
+                        <div class="form-group row">
+                            <label class="col-12 col-sm-3 col-form-label text-sm-right"></label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <img src="@Url.Content(@Model.ProfileImage)" height="100px" width="100px" />
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group row text-right">
+                        <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                            <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                        </div>
+                    </div>
+
+                }
+            </div>
+
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end valifation types -->
+    <!-- ============================================================== -->
+
+</div>
+<script>$('#validationSMSPlanform').parsley();</script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+                if ('@TempData["success"]' == "True") {
+                    bootoast.toast({
+                        message: '@TempData["message"]',
+                        type: 'success',
+                        position: 'right-top',
+                    });
+                }
+                else if ('@TempData["success"]' == "False") {
+                    bootoast.toast({
+                        message: '@TempData["message"]',
+                        type: 'danger',
+                        position: 'right-top',
+                    });
+                }
+
+    });
+
+    function checkFile() {
+          for (var i = 0; i < $("#files").get(0).files.length; ++i) {
+
+                    var file1 = $("#files").get(0).files[i].name;
+
+                    if (file1) {
+                        //var file_size = $("#files").get(0).files[i].size;
+                        //if (file_size < 2097152) {
+                        var ext = file1.split('.').pop().toLowerCase();
+                        if ($.inArray(ext, ['jpg', 'jpeg', 'png']) === -1) {
+                            alert("Invalid file");
+                            $("#files").val("");
+                            //    }
+
+                            //} else {
+                            //    alert("Screenshot size is too large.");
+                            //    return false;
+                        }
+                    }
+                }
+    }
+
+
+</script>
+

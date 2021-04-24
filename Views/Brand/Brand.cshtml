@@ -1,0 +1,107 @@
+﻿@model TryMoreWeb.Models.BrandModel 
+@{
+    ViewBag.Title = "Brand";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+
+    <!-- ============================================================== -->
+    <!-- valifation types -->
+    <!-- ============================================================== -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <h5 class="card-header">Brand</h5>
+            <div class="card-body">
+                @*new Dictionary<string, object>
+                    { { "enctype", "multipart/form-data" }, { "data-ajax", "false"} })*@
+                @using (Html.BeginForm("Brand", "Brand", FormMethod.Post, new Dictionary<string, object>
+                                                                                                { { "data-parsley-validate", "" }, { "novalidate", "false"} , { "id", "validationBrandform"} }))
+
+                {
+                    @Html.HiddenFor(m => m.BrandID)
+
+                    @Html.AntiForgeryToken()
+
+
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Brand Name</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @Html.TextBoxFor(m => m.BrandName,
+                         new Dictionary<string, object>
+              { { "class", "form-control"} , { "placeholder", "Brand Name"}  , { "required", ""} })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Brand Description</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @Html.TextBoxFor(m => m.BrandDescription,
+                         new Dictionary<string, object>
+              { { "class", "form-control"} , { "placeholder", "Brand Description"}  , { "required", ""} })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row text-right">
+                        <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                            <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                        </div>
+                    </div>
+
+                }
+            </div>
+
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end valifation types -->
+    <!-- ============================================================== -->
+
+</div>
+<script>$('#validationBrandform').parsley();</script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+                if ('@TempData["success"]' == "True") {
+                    bootoast.toast({
+                        message: '@TempData["message"]',
+                        type: 'success',
+                        position: 'right-top',
+                    });
+                }
+                else if ('@TempData["success"]' == "False") {
+                    bootoast.toast({
+                        message: '@TempData["message"]',
+                        type: 'danger',
+                        position: 'right-top',
+                    });
+                }
+
+            });
+</script>
+

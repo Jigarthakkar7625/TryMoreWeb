@@ -1,0 +1,117 @@
+﻿@model TryMoreWeb.Models.SMSPlanModel
+@{
+    ViewBag.Title = "SMSPlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <!-- ============================================================== -->
+    <!-- valifation types -->
+    <!-- ============================================================== -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <h5 class="card-header">SMS Plan</h5>
+            <div class="card-body">
+                @*new Dictionary<string, object>
+                    { { "enctype", "multipart/form-data" }, { "data-ajax", "false"} })*@
+                @using (Html.BeginForm("SMSPlan", "SMSPlan", FormMethod.Post, new Dictionary<string, object>
+                                                                    { { "data-parsley-validate", "" }, { "novalidate", "false"} , { "id", "validationSMSPlanform"} }))
+
+                {
+                    @Html.HiddenFor(m => m.SMSPlanID)
+
+                    @Html.AntiForgeryToken()
+                    <div class="form-group row">
+
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Plan Name</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @Html.TextBoxFor(m => m.PlanName, new { @class = "form-control", @required = "", @placeholder = "Plan Name" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Number of SMS</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @Html.TextBoxFor(m => m.NoOfSMS,
+                           new Dictionary<string, object>
+                { { "data-parsley-type" , "digits" }, { "class", "form-control"} , { "placeholder", "Number of SMS"}  , { "required", ""} })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Amount</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            @Html.TextBoxFor(m => m.Amount,
+                         new Dictionary<string, object>
+              { { "data-parsley-type" , "number"}, { "class", "form-control"} , { "placeholder", "Amount"}  , { "required", ""} })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-12 col-sm-3 col-form-label text-sm-right">Is Active</label>
+                        <div class="col-1 col-sm-1 col-lg-1 ">
+                            <label class="custom-control custom-checkbox">
+                                @Html.CheckBoxFor(m => m.IsActiveBool, new { @class = "custom-control-input" })
+                                <span class="custom-control-label"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row text-right">
+                        <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
+                            <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                        </div>
+                    </div>
+
+                }
+            </div>
+
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end valifation types -->
+    <!-- ============================================================== -->
+
+</div>
+<script>$('#validationSMSPlanform').parsley();</script>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+                if ('@TempData["success"]' == "True") {
+                    bootoast.toast({
+                        message: '@TempData["message"]',
+                        type: 'success',
+                        position: 'right-top',
+                    });
+                }
+                else if ('@TempData["success"]' == "False") {
+                    bootoast.toast({
+                        message: '@TempData["message"]',
+                        type: 'danger',
+                        position: 'right-top',
+                    });
+                }
+
+            });
+</script>
